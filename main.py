@@ -84,7 +84,7 @@ async def read_item(count: int):
 
 
 @app.get("/paragraph")
-def read_item():
+async def read_item():
     faker = BaivaruFaker()
     output = faker.paragraphs(1, True)
 
