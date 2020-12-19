@@ -25,11 +25,11 @@ class BaivaruFaker:
 
         words = ""
         for _ in range(count):
-            words += f"{self.word()}"
+            words += f"{self.word()} "
 
         return words
 
-    def sentence(self):
+    def sentence(self): 
         length = self.sentence_length
         sentence = f"{self.words(length)} {choice(self.endings_list)}. "
         return sentence
