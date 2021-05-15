@@ -1,8 +1,32 @@
-from fastapi import FastAPI
+import time
 
-from FakerAPI.BaivaruFaker import BaivaruFaker
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+
+from faker import DhivehiFaker as BaivaruFaker
 
 app = FastAPI()
+
+# Allow all origins CORS Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    """
+    Middleware to include response processing time.
+    """
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
 
 
 @app.get('/')
