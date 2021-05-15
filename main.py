@@ -6,7 +6,11 @@ from starlette.requests import Request
 
 from faker import DhivehiFaker as BaivaruFaker
 
-app = FastAPI()
+app = FastAPI(
+    title="Baivaru Faker",
+    description="Generate lorem but for Dhivehi",
+    version="0.0.1",
+)
 
 # Allow all origins CORS Middleware
 app.add_middleware(
@@ -30,7 +34,7 @@ async def add_process_time_header(request: Request, call_next):
 
 
 @app.get('/')
-def home():
+async def home():
     return {
         'app': 'BaivaruFaker',
         'description': 'Generate lorem but for Dhivehi',
@@ -49,7 +53,7 @@ def home():
 
 
 @app.get("/word/{count}")
-def read_item(count: int):
+async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.words(count, True)
 
@@ -60,7 +64,7 @@ def read_item(count: int):
 
 
 @app.get("/word")
-def read_item():
+async def read_item():
     faker = BaivaruFaker()
     output = faker.words(1, True)
 
@@ -71,7 +75,7 @@ def read_item():
 
 
 @app.get("/sentence/{count}")
-def read_item(count: int):
+async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.sentences(count, True)
 
@@ -82,7 +86,7 @@ def read_item(count: int):
 
 
 @app.get("/sentence")
-def read_item():
+async def read_item():
     faker = BaivaruFaker()
     output = faker.sentences(1, True)
 
@@ -93,7 +97,7 @@ def read_item():
 
 
 @app.get("/paragraph/{count}")
-def read_item(count: int):
+async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.paragraphs(count, True)
 
@@ -104,7 +108,7 @@ def read_item(count: int):
 
 
 @app.get("/paragraph")
-def read_item():
+async def read_item():
     faker = BaivaruFaker()
     output = faker.paragraphs(1, True)
 

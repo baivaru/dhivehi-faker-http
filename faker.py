@@ -1,4 +1,5 @@
 import json
+import os
 from random import choice, randint
 
 
@@ -46,6 +47,7 @@ class DhivehiFaker:
         sentences = ""
         for _ in range(count):
             sentences += self.sentence() + " "
+
         return sentences
 
     def paragraph(self):
