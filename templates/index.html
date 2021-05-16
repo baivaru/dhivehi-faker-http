@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Product example · Bootstrap v4.6</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/product/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('assets', path='/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href='https://dhivehi.mv/fonts/css/?family=faruma' rel='stylesheet' type='text/css'>
+
+    <meta name="theme-color" content="#563d7c">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('assets', path='/css/index.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<nav class="site-header sticky-top py-1">
+    <div class="container d-flex justify-content-around">
+        <a class="py-2" href="#">
+            Dhivehi Faker
+        </a>
+    </div>
+</nav>
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal mb-3">ދިވެހި ފޭކަރް</h1>
+        <p class="lead font-weight-normal">ލޮރެމް އިޕްސަމް، އެކަމަކު ދިވެހި.</p>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="type">ކޯއްޗެއް ޖެނެރޭޓް ކުރަންވީ؟</label>
+                <select class="form-control" id="type" name="type">
+                    <option value="word">ބަސް</option>
+                    <option value="sentence">ޖުމްލަ</option>
+                    <option value="paragraph">ޕެރެގްރާފް</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="count">ކިތަކެތި؟</label>
+                <input type="number" class="form-control" id="count" name="count" value="3">
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-success btn-block" id="generate-button">ޖެނެރޭޓް</button>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <ul id="results" class="text-right">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <p id="full-text" class="text-right"></p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer mt-auto py-3">
+    <div class="container text-center">
+        <span class="text-muted">Baivaru 2021</span>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script>
+        window.jQuery || document.write('<script src="js/jquery/jquery.slim.min.js"><\/script>')
+
+</script>
+<script src="{{ url_for('assets', path='/js/bootstrap.bundle.min.js') }}">
+</script>
+
+<script src="{{ url_for('assets', path='/js/axios.min.js') }}">
+</script>
+
+<script src="{{ url_for('assets', path='/js/index.js') }}">
+</script>
+
+</body>
+
+</html>

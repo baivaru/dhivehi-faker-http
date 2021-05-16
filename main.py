@@ -3,7 +3,13 @@ import time
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from starlette.background import BackgroundTask
+from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import StreamingResponse, FileResponse
 from faker import DhivehiFaker as BaivaruFaker
 
 app = FastAPI(
@@ -19,6 +25,9 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
+templates = Jinja2Templates(directory="templates")
 
 
 @app.middleware("http")
@@ -33,7 +42,12 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 
-@app.get('/')
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get('/api/')
 async def home():
     return {
         'app': 'BaivaruFaker',
@@ -42,17 +56,17 @@ async def home():
         'project': 'https://github.com/baivaru/BaivaruFaker',
         'docs': 'https://faker.baivaru.net/docs',
         'available_endpoints': [
-            '/word',
-            '/word/{count}',
-            '/sentence',
-            '/sentence/{count}',
-            '/paragraph',
-            '/paragraph/{count}',
+            '/api/word',
+            '/api/word/{count}',
+            '/api/sentence',
+            '/api/sentence/{count}',
+            '/api/paragraph',
+            '/api/paragraph/{count}',
         ]
     }
 
 
-@app.get("/word/{count}")
+@app.get("/api/word/{count}")
 async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.words(count, True)
@@ -63,7 +77,7 @@ async def read_item(count: int):
     }
 
 
-@app.get("/word")
+@app.get("/api/word")
 async def read_item():
     faker = BaivaruFaker()
     output = faker.words(1, True)
@@ -74,7 +88,7 @@ async def read_item():
     }
 
 
-@app.get("/sentence/{count}")
+@app.get("/api/sentence/{count}")
 async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.sentences(count, True)
@@ -85,7 +99,7 @@ async def read_item(count: int):
     }
 
 
-@app.get("/sentence")
+@app.get("/api/sentence")
 async def read_item():
     faker = BaivaruFaker()
     output = faker.sentences(1, True)
@@ -96,7 +110,7 @@ async def read_item():
     }
 
 
-@app.get("/paragraph/{count}")
+@app.get("/api/paragraph/{count}")
 async def read_item(count: int):
     faker = BaivaruFaker()
     output = faker.paragraphs(count, True)
@@ -107,7 +121,7 @@ async def read_item(count: int):
     }
 
 
-@app.get("/paragraph")
+@app.get("/api/paragraph")
 async def read_item():
     faker = BaivaruFaker()
     output = faker.paragraphs(1, True)
