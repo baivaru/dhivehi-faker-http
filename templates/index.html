@@ -33,7 +33,6 @@
 
     </style>
 
-
     <!-- Custom styles for this template -->
     <link href="{{ url_for('assets', path='/css/index.css') }}" rel="stylesheet">
 </head>
@@ -79,6 +78,7 @@
 
     <div class="card mt-3">
         <div class="card-body">
+            <h4 class="card-title">ހުރިހާއެއްޗެއް ވަކިވަކިން</h4>
             <ul id="results" class="text-right">
 
             </ul>
@@ -87,6 +87,7 @@
 
     <div class="card mt-3">
         <div class="card-body">
+            <h4 class="card-title">ހުރިހާއެއްޗެއް އެއްކޮށް</h4>
             <p id="full-text" class="text-right"></p>
         </div>
     </div>
@@ -94,7 +95,8 @@
 
 <footer class="footer mt-auto py-3">
     <div class="container text-center">
-        <span class="text-muted">Baivaru 2021</span> | <a href="https://github.com/baivaru/dhivehi-faker-http">Github</a> | <a href="/api">Find API here</a>
+        <span class="text-muted">Baivaru 2021</span> | <a
+            href="https://github.com/baivaru/dhivehi-faker-http">Github</a> | <a href="/api">Find API here</a>
     </div>
 </footer>
 
@@ -103,6 +105,7 @@
 </script>
 <script>
         window.jQuery || document.write('<script src="{{ url_for('assets', path='/js/jquery.min.js') }}"><\/script>')
+
 
 </script>
 <script src="{{ url_for('assets', path='/js/bootstrap.bundle.min.js') }}">
