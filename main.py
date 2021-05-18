@@ -1,22 +1,29 @@
 import time
 
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-from starlette.requests import Request
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from starlette.background import BackgroundTask
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import StreamingResponse, FileResponse
+
 from faker import DhivehiFaker as BaivaruFaker
+
+limiter = Limiter(key_func=get_remote_address)
+
+limiter.enabled = True
 
 app = FastAPI(
     title="Baivaru Faker",
     description="Generate lorem but for Dhivehi",
     version="0.0.1",
 )
+
+app.state.limiter = limiter
+
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Allow all origins CORS Middleware
 app.add_middleware(
@@ -66,19 +73,9 @@ async def home():
     }
 
 
-@app.get("/api/word/{count}")
-async def read_item(count: int):
-    faker = BaivaruFaker()
-    output = faker.words(count, True)
-
-    return {
-        "full": ' '.join(output),
-        "raw": output,
-    }
-
-
 @app.get("/api/word")
-async def read_item():
+@limiter.limit('100/min')
+async def single_word(request: Request):
     faker = BaivaruFaker()
     output = faker.words(1, True)
 
@@ -88,10 +85,11 @@ async def read_item():
     }
 
 
-@app.get("/api/sentence/{count}")
-async def read_item(count: int):
+@app.get("/api/word/{count}")
+@limiter.limit('1/min')
+async def multi_word(request: Request, count: int):
     faker = BaivaruFaker()
-    output = faker.sentences(count, True)
+    output = faker.words(count if count < 10 else 10, True)
 
     return {
         "full": ' '.join(output),
@@ -100,7 +98,8 @@ async def read_item(count: int):
 
 
 @app.get("/api/sentence")
-async def read_item():
+@limiter.limit('100/min')
+async def single_sentence(request: Request):
     faker = BaivaruFaker()
     output = faker.sentences(1, True)
 
@@ -110,10 +109,11 @@ async def read_item():
     }
 
 
-@app.get("/api/paragraph/{count}")
-async def read_item(count: int):
+@app.get("/api/sentence/{count}")
+@limiter.limit('100/min')
+async def multi_sentence(request: Request, count: int):
     faker = BaivaruFaker()
-    output = faker.paragraphs(count, True)
+    output = faker.sentences(count if count < 10 else 10, True)
 
     return {
         "full": ' '.join(output),
@@ -122,9 +122,22 @@ async def read_item(count: int):
 
 
 @app.get("/api/paragraph")
-async def read_item():
+@limiter.limit('100/min')
+async def single_paragraph(request: Request):
     faker = BaivaruFaker()
     output = faker.paragraphs(1, True)
+
+    return {
+        "full": ' '.join(output),
+        "raw": output,
+    }
+
+
+@app.get("/api/paragraph/{count}")
+@limiter.limit('100/min')
+async def multi_paragraph(request: Request, count: int):
+    faker = BaivaruFaker()
+    output = faker.paragraphs(count if count < 10 else 10, True)
 
     return {
         "full": ' '.join(output),
