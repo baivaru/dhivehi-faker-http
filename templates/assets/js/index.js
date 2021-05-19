@@ -1,7 +1,5 @@
 
 $(document).ready(function() {
-    console.log('Bro')
-
     $('#generate-button').click(function(e){
         e.preventDefault();
         var type = $("#type").val();
