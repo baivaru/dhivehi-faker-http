@@ -32,7 +32,7 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
-app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
 
 templates = Jinja2Templates(directory="templates")
 
