@@ -8,3 +8,4 @@ https://faker.baivaru.net
 
 ## Credits
 * [Athphane](https://github.com/athphane) - Author
+* [Atom](https://github.com/phoenixatom) - Author
