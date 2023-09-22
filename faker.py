@@ -44,10 +44,8 @@ class DhivehiFaker:
         if array:
             return [self.sentence() for _ in range(count)]
 
-        sentences = ""
-        for _ in range(count):
-            sentences += self.sentence() + " "
-
+        sentence_list = [self.sentence() for _ in range(count)]
+        sentences = " ".join(sentence_list)
         return sentences
 
     def paragraph(self):
@@ -59,7 +57,7 @@ class DhivehiFaker:
         if array:
             return [self.paragraph() for _ in range(count)]
 
-        paragraphs = ""
-        for _ in range(count):
-            paragraphs += f"{self.paragraph()}\n\n"
-        return paragraphs.rstrip()
+        paragraph_list = [self.paragraph() for _ in range(count)]
+        paragraphs = "\n\n".join(paragraph_list)
+        return paragraphs
+

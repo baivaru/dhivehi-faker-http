@@ -134,3 +134,8 @@ ul {
 li {
   direction: rtl;
 }
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
